@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="SPIN Table Tennis Club - registro profesional de jugadores, dashboard, ranking y administración de partidas." />
+  <title>SPIN Table Tennis Club</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo" aria-label="SPIN logo"><span>SP</span><i></i><span>N</span></div>
+      <div><strong>SPIN Club</strong><small>Table Tennis Registration Hub</small></div>
+    </div>
+    <nav>
+      <a href="#registro">Registro</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#jugadores">Jugadores</a>
+      <button id="exportCsv" class="ghost">Export CSV</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Club Management · Fast Check-in · Smart Dashboard</p>
+        <h1>Organiza tus partidos de tenis de mesa como un club profesional.</h1>
+        <p>Registro rápido por año, edición y eliminación de jugadores, dashboard en vivo, ranking y control local de participantes. Ideal para torneos, prácticas y eventos del club.</p>
+        <div class="hero-actions">
+          <a href="#registro" class="btn primary">Registrar jugador</a>
+          <a href="#jugadores" class="btn secondary">Ver lista</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="orb"></div>
+        <h2>Live Club Board</h2>
+        <div class="mini-stat"><span id="heroPlayers">0</span><small>jugadores activos</small></div>
+        <div class="mini-stat"><span id="heroAvg">0</span><small>promedio rating</small></div>
+        <div class="paddle">🏓</div>
+      </div>
+    </section>
+
+    <section id="dashboard" class="dashboard">
+      <article class="stat-card"><span>Total</span><strong id="totalPlayers">0</strong><small>Jugadores registrados</small></article>
+      <article class="stat-card"><span>Activos</span><strong id="activePlayers">0</strong><small>Disponibles para jugar</small></article>
+      <article class="stat-card"><span>Promedio</span><strong id="avgRating">0</strong><small>Rating del grupo</small></article>
+      <article class="stat-card"><span>Top</span><strong id="topPlayer">—</strong><small>Mejor ranking</small></article>
+    </section>
+
+    <section class="grid">
+      <form id="playerForm" class="panel" autocomplete="off">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">Registro</p>
+            <h2 id="formTitle">Nuevo jugador</h2>
+          </div>
+          <button type="button" id="resetForm" class="ghost small">Limpiar</button>
+        </div>
+
+        <input type="hidden" id="playerId" />
+        <label>Nombre completo<input id="name" required placeholder="Ej. Carlos Pérez" /></label>
+        <label>Año de nacimiento<input id="birthYear" required type="number" min="1900" max="2026" placeholder="Ej. 1992" /></label>
+        <label>Nivel
+          <select id="level" required>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+            <option value="Pro">Pro</option>
+          </select>
+        </label>
+        <label>Rating inicial<input id="rating" type="number" min="0" max="3000" value="1000" /></label>
+        <label>Estado
+          <select id="status">
+            <option value="Active">Active</option>
+            <option value="Not Playing">Not Playing</option>
+            <option value="Waitlist">Waitlist</option>
+          </select>
+        </label>
+        <label>Notas<textarea id="notes" rows="3" placeholder="Disponibilidad, equipo, comentarios..."></textarea></label>
+        <button class="btn primary full" type="submit">Guardar jugador</button>
+      </form>
+
+      <section id="jugadores" class="panel list-panel">
+        <div class="panel-head wrap">
+          <div>
+            <p class="eyebrow">Administración</p>
+            <h2>Jugadores</h2>
+          </div>
+          <div class="filters">
+            <input id="searchInput" placeholder="Buscar jugador..." />
+            <select id="filterStatus">
+              <option value="All">Todos</option>
+              <option value="Active">Active</option>
+              <option value="Not Playing">Not Playing</option>
+              <option value="Waitlist">Waitlist</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Jugador</th><th>Año</th><th>Nivel</th><th>Rating</th><th>Estado</th><th>Acciones</th></tr></thead>
+            <tbody id="playersTable"></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
