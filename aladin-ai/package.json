@@ -1,0 +1,12 @@
+{
+  "name": "aladin-ai",
+  "version": "0.1.0",
+  "description": "Offline-first JavaScript machine learning and NLP engine for browser applications.",
+  "main": "dist/aladin-ai.js",
+  "type": "module",
+  "scripts": {
+    "test": "node tests/smoke.test.js"
+  },
+  "keywords": ["machine-learning", "nlp", "offline", "javascript", "decision-tree", "kmeans", "naive-bayes"],
+  "license": "MIT"
+}
