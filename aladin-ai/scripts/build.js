@@ -10,6 +10,7 @@ function stripModuleSyntax(source,{core=false}={}){
   s=s.replace(/^import[\s\S]*?from\s+['"][^'"]+['"];?\s*/m,'');
   s=s.replace(/^import\s+[^;]+;?\s*$/gm,'');
   s=s.replace(/export\s+default\s+AladinAI\s*;?/g,'');
+  s=s.replace(/export\s+async\s+function\s+/g,'async function ');
   s=s.replace(/export\s+(?=(class|const|function)\b)/g,'');
   if(core)s=s.replace(/if\(typeof window!=='undefined'\)window\.AladinAI=AladinAI;?/g,'');
   return s.trim();
