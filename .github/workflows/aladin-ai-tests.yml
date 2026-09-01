@@ -1,4 +1,4 @@
-name: AladinAI Tests
+name: AladinAI Build and Tests
 
 on:
   push:
@@ -11,7 +11,7 @@ on:
       - '.github/workflows/aladin-ai-tests.yml'
 
 jobs:
-  test:
+  build-and-test:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -21,5 +21,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Run AladinAI tests
+      - name: Build full browser bundle
+        run: npm run build
+      - name: Run core, advanced and extra tests
         run: npm test
+      - name: Verify generated browser bundle exists
+        run: test -s dist/aladin-ai.js
