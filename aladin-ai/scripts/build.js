@@ -17,7 +17,7 @@ function stripModuleSyntax(source,{core=false}={}){
   return s.trim();
 }
 
-const sourceNames=['aladin-ai.js','advanced.js','extra.js','neural.js','browser.js','retrieval.js','regression-trees.js','vision.js','vision-ml.js','github-cloud.js'];
+const sourceNames=['aladin-ai.js','advanced.js','extra.js','neural.js','browser.js','retrieval.js','regression-trees.js','vision.js','vision-extra.js','vision-ml.js','github-cloud.js','cloud-integrity.js'];
 const parts=[];
 for(const [i,name] of sourceNames.entries())parts.push(stripModuleSyntax(await readFile(resolve(root,`src/${name}`),'utf8'),{core:i===0}));
 
@@ -31,8 +31,10 @@ const names=[
   'NearestNeighborsIndex','reciprocalRankFusion','DecisionTreeRegressor','RandomForestRegressor',
   'validateImage','toGrayscale','imageFromCanvas','imageFromSource','resizeNearest','histogram','convolve','Kernels','sobelEdges',
   'otsuThreshold','threshold','connectedComponents','averageHash','differenceHash','hammingDistance','perceptualSimilarity',
-  'templateMatch','colorKMeans','imageDescriptor','compareDescriptors','ImageFeatureExtractor','ImageSimilarityIndex','ImageClassifier','ImageRegressor',
-  'GitHubCloud','GitHubReleaseAssetResolver','LocalFirstRepository','assertNoEmbeddedGitHubToken','GitHubCloudPatterns'
+  'templateMatch','colorKMeans','imageDescriptor','compareDescriptors','hogDescriptor','erode','dilate','openMorphology','closeMorphology',
+  'structuralSimilarity','edgeDensity','imageMoments','ImageFeatureExtractor','ImageSimilarityIndex','ImageClassifier','ImageRegressor',
+  'GitHubCloud','GitHubReleaseAssetResolver','LocalFirstRepository','assertNoEmbeddedGitHubToken','GitHubCloudPatterns',
+  'sha256Hex','verifySha256','fetchVerifiedAsset','VerifiedManifestLoader'
 ];
 
 const banner=`/* AladinAI.js v${VERSION} | offline-first ML/NLP/retrieval/vision engine | generated file: do not edit directly */`;
