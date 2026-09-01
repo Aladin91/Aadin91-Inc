@@ -1,0 +1,42 @@
+name: AladinAI Build and Tests
+
+on:
+  push:
+    paths:
+      - 'aladin-ai/**'
+      - '.github/workflows/aladin-ai-tests.yml'
+      - '.github/workflows/aladin-ai-pages.yml'
+  pull_request:
+    paths:
+      - 'aladin-ai/**'
+      - '.github/workflows/aladin-ai-tests.yml'
+      - '.github/workflows/aladin-ai-pages.yml'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: aladin-ai
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build full browser bundle
+        run: npm run build
+      - name: Run full test suite
+        run: npm test
+      - name: Verify generated browser bundle exists
+        run: test -s dist/aladin-ai.js
+      - name: Generate SHA-256 checksum
+        run: sha256sum dist/aladin-ai.js > dist/aladin-ai.js.sha256
+      - name: Upload verified browser bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: aladin-ai-v0.4-browser-bundle
+          path: |
+            aladin-ai/dist/aladin-ai.js
+            aladin-ai/dist/aladin-ai.js.sha256
+          if-no-files-found: error
+          retention-days: 30

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AladinAI Demo</title></head>
+<body>
+  <h1>AladinAI Browser Demo</h1>
+  <pre id="out"></pre>
+  <script src="../dist/aladin-ai.js"></script>
+  <script>
+    const out = document.getElementById('out');
+    const log = x => out.textContent += (typeof x === 'string' ? x : JSON.stringify(x,null,2)) + '\n\n';
+
+    const tokenizer = new AladinAI.Tokenizer({removeStopWords:true});
+    log({tokens: tokenizer.tokenize('The cooling tower requires 480V power by electrical contractor.')});
+
+    const X = [[5,208],[7.5,208],[15,480],[20,480]];
+    const y = ['small','small','large','large'];
+    const tree = new AladinAI.DecisionTreeClassifier({maxDepth:4}).fit(X,y);
+    log({decisionTreePrediction: tree.predict([[18,480]])});
+
+    const textModel = new AladinAI.MultinomialNaiveBayesText();
+    textModel.train('power wiring disconnect voltage electrical','electrical')
+             .train('airflow duct fan cfm static pressure','hvac')
+             .train('drain condensate water piping gpm','plumbing')
+             .fit();
+    log({textPrediction: textModel.predict('provide power wiring for disconnect')});
+
+    const km = new AladinAI.KMeans({clusters:2}).fit([[1,1],[1.2,.9],[9,9],[9.2,8.8]]);
+    log({clusters: km.labels, centroids: km.centroids});
+  </script>
+</body>
+</html>

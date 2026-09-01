@@ -1,0 +1,9 @@
+{
+  "name": "AladinAI Personal App",
+  "short_name": "AladinApp",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0d1117",
+  "theme_color": "#0d1117",
+  "description": "Offline-first personal application powered by AladinAI."
+}

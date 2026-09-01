@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AladinAI</title><style>body{font-family:system-ui;max-width:1000px;margin:50px auto;padding:0 22px;background:#0d1117;color:#e6edf3}a{color:#58a6ff}.card{background:#161b22;border:1px solid #30363d;border-radius:12px;padding:20px;margin:16px 0}code{background:#21262d;padding:2px 6px;border-radius:4px}.ok{color:#3fb950}</style></head><body>
+<h1>AladinAI <span id="version"></span></h1>
+<p>Offline-first JavaScript ML, NLP, retrieval, computer vision and decision framework.</p>
+<div class="card"><h2>Runtime</h2><p id="runtime">Loading verified browser bundle…</p></div>
+<div class="card"><h2>Demos</h2><p><a href="examples/browser-demo.html">Core ML demo</a></p><p><a href="examples/advanced-demo.html">Advanced ML demo</a></p><p><a href="examples/retrieval-demo.html">Local retrieval demo</a></p><p><a href="examples/vision-demo.html">Local image analysis demo</a></p></div>
+<div class="card"><h2>Use in another app</h2><pre>&lt;script src="https://YOUR-GITHUB-PAGES/aladin-ai.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  console.log(AladinAI.version);
+&lt;/script&gt;</pre></div>
+<div class="card"><h2>Privacy model</h2><p>Inference and image processing run in the browser. GitHub is used for versioned distribution/hosting; mutable private state should remain local in IndexedDB unless explicitly synchronized through a trusted process.</p></div>
+<script src="aladin-ai.js"></script><script>version.textContent='v'+AladinAI.version;runtime.innerHTML='<span class="ok">Ready</span> — '+Object.keys(AladinAI).length+' exported capabilities. WebGPU: '+(AladinAI.getRuntimeCapabilities?.().webGPU?'yes':'no');</script>
+</body></html>

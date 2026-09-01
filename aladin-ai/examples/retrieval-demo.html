@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AladinAI Local Retrieval Demo</title>
+  <style>body{font-family:system-ui,sans-serif;max-width:900px;margin:40px auto;padding:0 20px}textarea,input{width:100%;box-sizing:border-box;padding:10px;margin:6px 0 12px}button{padding:10px 16px}pre{background:#f4f4f4;padding:16px;white-space:pre-wrap}</style>
+</head>
+<body>
+  <h1>AladinAI Local Retrieval</h1>
+  <p>Everything below runs locally in the browser. No API or internet inference is required.</p>
+  <textarea id="docs" rows="8">Air handling unit supply fan airflow and static pressure
+Electrical disconnect voltage power wiring and breaker requirements
+Condensate drain water piping plumbing connection
+BACnet controls communication and BAS integration
+Filter MERV rating and replacement requirements</textarea>
+  <input id="query" value="power disconnect voltage" placeholder="Search query">
+  <button id="search">Search locally</button>
+  <pre id="out"></pre>
+  <script type="module">
+    import AladinAI from '../src/index.js';
+    const docsEl=document.getElementById('docs'),qEl=document.getElementById('query'),out=document.getElementById('out');
+    document.getElementById('search').onclick=()=>{
+      const docs=docsEl.value.split(/\n+/).map(x=>x.trim()).filter(Boolean);
+      const meta=docs.map((_,i)=>({id:i+1}));
+      const bm25=new AladinAI.BM25Index().fit(docs,meta);
+      const tfidf=new AladinAI.TextSimilarityIndex().fit(docs,meta);
+      const a=bm25.search(qEl.value,{topK:3});
+      const b=tfidf.search(qEl.value,{topK:3});
+      const fused=AladinAI.reciprocalRankFusion([a,b],{topK:3,key:r=>r.metadata.id});
+      out.textContent=JSON.stringify({bm25:a,tfidf:b,fused},null,2);
+    };
+  </script>
+</body>
+</html>

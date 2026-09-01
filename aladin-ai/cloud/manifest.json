@@ -1,0 +1,56 @@
+{
+  "name": "AladinAI",
+  "version": "0.4.0",
+  "channel": "development",
+  "bundle": "dist/aladin-ai.js",
+  "modules": [
+    "core",
+    "advanced",
+    "extra",
+    "neural",
+    "retrieval",
+    "regression-trees",
+    "vision",
+    "vision-extra",
+    "vision-ml",
+    "vision-adapters",
+    "github-cloud",
+    "cloud-integrity",
+    "asset-store"
+  ],
+  "capabilities": {
+    "offlineML": true,
+    "offlineNLP": true,
+    "offlineRetrieval": true,
+    "offlineVision": true,
+    "imageSimilarity": true,
+    "imageClassificationAdapters": true,
+    "imageRegressionAdapters": true,
+    "perceptualHashing": true,
+    "templateMatching": true,
+    "hogFeatures": true,
+    "ssim": true,
+    "morphology": true,
+    "localOCRAdapter": true,
+    "localVisionModelAdapter": true,
+    "imageEmbeddingIndex": true,
+    "indexedDB": true,
+    "indexedDBAssetCache": true,
+    "githubAssetLoading": true,
+    "sha256AssetVerification": true,
+    "githubPagesDeployment": true,
+    "personalAppPWAStarter": true
+  },
+  "storagePolicy": {
+    "publicVersionedAssets": "GitHub repository or release assets",
+    "privateMutableAppData": "local IndexedDB by default",
+    "browserWriteTokens": "not permitted",
+    "trustedWrites": "GitHub Actions or trusted local/server process"
+  },
+  "futureOptionalRuntimes": [
+    "locally bundled Tesseract OCR",
+    "ONNX Runtime Web",
+    "WebGPU vision models",
+    "WebNN vision models"
+  ]
+}
