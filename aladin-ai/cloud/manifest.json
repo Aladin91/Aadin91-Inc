@@ -13,8 +13,10 @@
     "vision",
     "vision-extra",
     "vision-ml",
+    "vision-adapters",
     "github-cloud",
-    "cloud-integrity"
+    "cloud-integrity",
+    "asset-store"
   ],
   "capabilities": {
     "offlineML": true,
@@ -29,10 +31,15 @@
     "hogFeatures": true,
     "ssim": true,
     "morphology": true,
+    "localOCRAdapter": true,
+    "localVisionModelAdapter": true,
+    "imageEmbeddingIndex": true,
     "indexedDB": true,
+    "indexedDBAssetCache": true,
     "githubAssetLoading": true,
     "sha256AssetVerification": true,
-    "githubPagesDeployment": true
+    "githubPagesDeployment": true,
+    "personalAppPWAStarter": true
   },
   "storagePolicy": {
     "publicVersionedAssets": "GitHub repository or release assets",
@@ -41,7 +48,7 @@
     "trustedWrites": "GitHub Actions or trusted local/server process"
   },
   "futureOptionalRuntimes": [
-    "local OCR",
+    "locally bundled Tesseract OCR",
     "ONNX Runtime Web",
     "WebGPU vision models",
     "WebNN vision models"
