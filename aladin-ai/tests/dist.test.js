@@ -16,8 +16,13 @@ assert.equal(typeof AI.RandomForestClassifier, 'function');
 assert.equal(typeof AI.NeuralNetworkClassifier, 'function');
 assert.equal(typeof AI.RandomForestRegressor, 'function');
 assert.equal(typeof AI.sobelEdges, 'function');
+assert.equal(typeof AI.hogDescriptor, 'function');
 assert.equal(typeof AI.perceptualSimilarity, 'function');
+assert.equal(typeof AI.ImageSimilarityIndex, 'function');
+assert.equal(typeof AI.TesseractOCRAdapter, 'function');
+assert.equal(typeof AI.LocalVisionModelAdapter, 'function');
 assert.equal(typeof AI.GitHubCloud, 'function');
+assert.equal(typeof AI.verifySha256, 'function');
 
 const search = new AI.BM25Index().fit([
   'airflow fan duct',
@@ -32,6 +37,11 @@ assert.equal(forest.predict([[8.5]])[0], 'high');
 const img={width:2,height:2,data:Uint8Array.from([0,0,255,255])};
 assert.equal(AI.averageHash(img).length,64);
 assert.equal(AI.perceptualSimilarity(img,img),1);
+assert.ok(AI.hogDescriptor(img,{width:16,height:16,cellSize:4}).vector.length>0);
+
+const fakeOCR={recognize:async()=>({data:{text:'offline text',confidence:99}})};
+const ocr=new AI.TesseractOCRAdapter(fakeOCR);
+assert.equal((await ocr.recognize({})).text,'offline text');
 
 const cloud=new AI.GitHubCloud({owner:'Aladin91',repo:'Aadin91-Inc',branch:'aladin-ai-engine'});
 assert.ok(cloud.rawUrl('aladin-ai/cloud/manifest.json').includes('raw.githubusercontent.com'));
