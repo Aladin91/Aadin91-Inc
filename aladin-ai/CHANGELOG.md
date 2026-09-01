@@ -5,18 +5,27 @@
 - Added local computer-vision primitives for grayscale conversion, histograms and image resizing.
 - Added generic convolution filters and Sobel edge detection.
 - Added Otsu thresholding and binary connected-component analysis.
+- Added binary dilation, erosion, opening and closing.
+- Added image moments, edge density, HOG features and global SSIM.
 - Added average hash and difference hash perceptual image fingerprints.
 - Added perceptual similarity and descriptor-based image comparison.
 - Added normalized template matching.
 - Added basic RGB K-Means image segmentation.
 - Added reusable image descriptors combining intensity, edges and perceptual hashes.
 - Added ImageFeatureExtractor, ImageSimilarityIndex, ImageClassifier and ImageRegressor adapters so existing AladinAI models can consume image-derived features.
+- Added LocalVisionModelAdapter for arbitrary local predictors.
+- Added TesseractOCRAdapter for locally bundled Tesseract-compatible OCR runtimes.
+- Added ImageEmbeddingIndex for local visual embeddings.
+- Added detection helpers for Tesseract, ONNX Runtime, WebGPU and WebNN availability.
 - Added a standalone browser vision demo; selected images remain local to the browser.
 - Added GitHubCloud, release-asset resolver and local-first repository helpers.
 - Added protection against accidentally embedding GitHub personal access tokens in browser code.
+- Added SHA-256 asset verification and a verified manifest loader.
+- Added MemoryAssetStore, IndexedDBAssetStore and VerifiedAssetCache for download-once/offline-later model and dataset files.
 - Added a versioned cloud manifest and documentation for using GitHub as deployment/versioned asset storage while keeping mutable personal data local-first.
 - Added a manual GitHub Pages deployment workflow for the verified framework bundle and demos.
-- Expanded the generated browser bundle and CI suite to cover vision and GitHub-cloud helpers.
+- Added an installable PWA personal-app starter template with service-worker caching and local checkpoints.
+- Expanded the generated browser bundle and CI suite to cover vision, local vision adapters, GitHub-cloud helpers, asset integrity and offline asset caching.
 
 ## 0.3.0
 
