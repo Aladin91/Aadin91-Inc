@@ -1,4 +1,4 @@
-import { MathX, DecisionTreeClassifier, StandardScaler } from './aladin-ai.js';
+import { MathX, DecisionTreeClassifier, StandardScaler, MinMaxScaler, KNNClassifier, GaussianNaiveBayes, KMeans, DBSCAN, RuleEngine, EnsembleClassifier } from './aladin-ai.js';
 
 export const ALADIN_AI_ADVANCED_VERSION = '0.2.0';
 
@@ -68,7 +68,7 @@ export class KMeansPlusPlus {
 export class ZScoreAnomalyDetector {
   constructor({threshold=3}={}){ this.threshold=threshold; }
   fit(X){ Validation.matrix(X); const p=X[0].length; this.means=[];this.stds=[]; for(let j=0;j<p;j++){const col=X.map(r=>r[j]);this.means.push(MathX.mean(col));this.stds.push(MathX.std(col)||1);} return this; }
-  scoreSamples(X){ return X.map(r=>Math.max(...r.map((v,j)=>Math.abs((v-this.means[j])/this.stds[j])))); }
+  scoreSamples(X){ Validation.matrix(X); return X.map(r=>Math.max(...r.map((v,j)=>Math.abs((v-this.means[j])/this.stds[j])))); }
   predict(X){ return this.scoreSamples(X).map(s=>s>this.threshold?-1:1); }
 }
 
@@ -76,7 +76,7 @@ export class IQRAnomalyDetector {
   constructor({factor=1.5}={}){ this.factor=factor; }
   _q(a,q){ const s=[...a].sort((x,y)=>x-y),pos=(s.length-1)*q,lo=Math.floor(pos),hi=Math.ceil(pos); return lo===hi?s[lo]:s[lo]+(s[hi]-s[lo])*(pos-lo); }
   fit(X){ Validation.matrix(X); const p=X[0].length; this.bounds=[]; for(let j=0;j<p;j++){const c=X.map(r=>r[j]),q1=this._q(c,.25),q3=this._q(c,.75),iqr=q3-q1;this.bounds.push([q1-this.factor*iqr,q3+this.factor*iqr]);}return this; }
-  predict(X){ return X.map(r=>r.some((v,j)=>v<this.bounds[j][0]||v>this.bounds[j][1])?-1:1); }
+  predict(X){ Validation.matrix(X); return X.map(r=>r.some((v,j)=>v<this.bounds[j][0]||v>this.bounds[j][1])?-1:1); }
 }
 
 export class Pipeline {
@@ -94,9 +94,39 @@ export class DecisionEngine {
   analyze(row,context={}){ const votes=this.models.map((m,i)=>({prediction:m.predict([row])[0],weight:this.weights[i],model:m.constructor.name})); const totals={}; votes.forEach(v=>totals[v.prediction]=(totals[v.prediction]||0)+v.weight); const ranked=Object.entries(totals).sort((a,b)=>b[1]-a[1]),sum=this.weights.reduce((a,b)=>a+b,0)||1; const rules=this.ruleEngine?this.ruleEngine.evaluate(context):[]; return {decision:ranked[0]?.[0]??null,confidence:(ranked[0]?.[1]??0)/sum,votes,rules,reasons:[...votes.map(v=>`${v.model}: ${v.prediction}`),...rules.map(r=>r.reason)]}; }
 }
 
-export class SerializableModel {
-  static dump(model){ const state={}; for(const [k,v] of Object.entries(model)) if(typeof v!=='function') state[k]=v; return {format:'aladin-ai-model',version:1,type:model.constructor.name,state}; }
-  static restore(payload,registry={}){ if(!payload||payload.format!=='aladin-ai-model') throw new Error('Invalid AladinAI model payload'); const C=registry[payload.type]; if(!C) throw new Error(`Model type not registered: ${payload.type}`); const m=Object.create(C.prototype); Object.assign(m,payload.state); return m; }
+function encodeState(value){
+  if(value===null||typeof value!=='object')return value;
+  if(Array.isArray(value))return value.map(encodeState);
+  if(value instanceof Map)return{__aladinType:'Map',entries:[...value.entries()].map(([k,v])=>[encodeState(k),encodeState(v)])};
+  if(value instanceof Set)return{__aladinType:'Set',values:[...value].map(encodeState)};
+  const ctor=value.constructor?.name;
+  if(ctor&&ctor!=='Object'){
+    const state={};for(const[k,v]of Object.entries(value))if(typeof v!=='function')state[k]=encodeState(v);
+    return{__aladinType:'Model',modelType:ctor,state};
+  }
+  return Object.fromEntries(Object.entries(value).map(([k,v])=>[k,encodeState(v)]));
+}
+function decodeState(value,registry){
+  if(value===null||typeof value!=='object')return value;
+  if(Array.isArray(value))return value.map(v=>decodeState(v,registry));
+  if(value.__aladinType==='Map')return new Map(value.entries.map(([k,v])=>[decodeState(k,registry),decodeState(v,registry)]));
+  if(value.__aladinType==='Set')return new Set(value.values.map(v=>decodeState(v,registry)));
+  if(value.__aladinType==='Model'){
+    const C=registry[value.modelType];if(!C)throw new Error(`Model type not registered: ${value.modelType}`);
+    const obj=Object.create(C.prototype);Object.assign(obj,decodeState(value.state,registry));return obj;
+  }
+  return Object.fromEntries(Object.entries(value).map(([k,v])=>[k,decodeState(v,registry)]));
 }
 
-export function createDefaultRegistry(extra={}){ return {LinearRegression,LogisticRegression,RandomForestClassifier,KMeansPlusPlus,ZScoreAnomalyDetector,IQRAnomalyDetector,LabelEncoder,OneHotEncoder,StandardScaler,...extra}; }
+export class SerializableModel {
+  static dump(model){ return {format:'aladin-ai-model',version:2,payload:encodeState(model)}; }
+  static restore(payload,registry=createDefaultRegistry()){ if(!payload||payload.format!=='aladin-ai-model') throw new Error('Invalid AladinAI model payload'); if(payload.version!==2) throw new Error(`Unsupported AladinAI model format version: ${payload.version}`); return decodeState(payload.payload,registry); }
+  static stringify(model,space=0){ return JSON.stringify(this.dump(model),null,space); }
+  static parse(json,registry=createDefaultRegistry()){ return this.restore(JSON.parse(json),registry); }
+}
+
+export function createDefaultRegistry(extra={}){ return {
+  DecisionTreeClassifier,StandardScaler,MinMaxScaler,KNNClassifier,GaussianNaiveBayes,KMeans,DBSCAN,RuleEngine,EnsembleClassifier,
+  SeededRandom,LabelEncoder,OneHotEncoder,LinearRegression,LogisticRegression,RandomForestClassifier,KMeansPlusPlus,ZScoreAnomalyDetector,IQRAnomalyDetector,Pipeline,DecisionEngine,
+  ...extra
+}; }
