@@ -5,10 +5,12 @@ on:
     paths:
       - 'aladin-ai/**'
       - '.github/workflows/aladin-ai-tests.yml'
+      - '.github/workflows/aladin-ai-pages.yml'
   pull_request:
     paths:
       - 'aladin-ai/**'
       - '.github/workflows/aladin-ai-tests.yml'
+      - '.github/workflows/aladin-ai-pages.yml'
 
 jobs:
   build-and-test:
