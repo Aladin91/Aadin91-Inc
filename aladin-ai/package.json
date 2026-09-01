@@ -12,23 +12,25 @@
     "./extra": "./src/extra.js",
     "./neural": "./src/neural.js",
     "./retrieval": "./src/retrieval.js",
+    "./regression-trees": "./src/regression-trees.js",
     "./browser-utils": "./src/browser.js",
     "./browser": "./dist/aladin-ai.js",
     "./loader": "./dist/aladin-ai-loader.js"
   },
   "scripts": {
     "build": "node scripts/build.js",
-    "test": "node tests/smoke.test.js && node tests/advanced.test.js && node tests/extra.test.js && node tests/neural.test.js && node tests/retrieval.test.js && node tests/browser.test.js && node tests/dist.test.js",
+    "test": "node tests/smoke.test.js && node tests/advanced.test.js && node tests/extra.test.js && node tests/neural.test.js && node tests/retrieval.test.js && node tests/regression-trees.test.js && node tests/browser.test.js && node tests/dist.test.js",
     "test:core": "node tests/smoke.test.js",
     "test:advanced": "node tests/advanced.test.js",
     "test:extra": "node tests/extra.test.js",
     "test:neural": "node tests/neural.test.js",
     "test:retrieval": "node tests/retrieval.test.js",
+    "test:regression-trees": "node tests/regression-trees.test.js",
     "test:browser": "node tests/browser.test.js",
     "test:dist": "node tests/dist.test.js",
     "benchmark": "node benchmarks/basic.js",
     "check": "npm run build && npm test"
   },
-  "keywords": ["machine-learning", "nlp", "offline", "javascript", "decision-tree", "random-forest", "neural-network", "kmeans", "naive-bayes", "anomaly-detection", "pca", "softmax", "clustering", "indexeddb", "explainable-ai", "bm25", "tfidf", "retrieval", "similarity-search"],
+  "keywords": ["machine-learning", "nlp", "offline", "javascript", "decision-tree", "random-forest", "neural-network", "kmeans", "naive-bayes", "anomaly-detection", "pca", "softmax", "clustering", "indexeddb", "explainable-ai", "bm25", "tfidf", "retrieval", "similarity-search", "regression-tree"],
   "license": "MIT"
 }
