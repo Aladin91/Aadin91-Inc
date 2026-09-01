@@ -1,6 +1,6 @@
 import { SerializableModel } from './advanced.js';
 
-export const BROWSER_ENGINE_VERSION = '0.3.0';
+export const BROWSER_ENGINE_VERSION = '0.4.0';
 
 export function schemaFingerprint(schema){
   const text=JSON.stringify(schema);
