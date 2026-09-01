@@ -2,8 +2,10 @@ export class GitHubCloud {
   constructor({owner,repo,branch='master',basePath='',cache='default'}={}){
     if(!owner||!repo)throw new Error('owner and repo are required');Object.assign(this,{owner,repo,branch,basePath:basePath.replace(/^\/+|\/+$/g,''),cache});
   }
-  rawUrl(path){const p=[this.basePath,path].filter(Boolean).join('/').replace(/^\/+/, '');return `https://raw.githubusercontent.com/${encodeURIComponent(this.owner)}/${encodeURIComponent(this.repo)}/${encodeURIComponent(this.branch)}/${p.split('/').map(encodeURIComponent).join('/')}`;}
-  pagesUrl(path=''){const p=[this.repo,this.basePath,path].filter(Boolean).join('/').replace(/^\/+|\/+$/g,'');return `https://${this.owner.toLowerCase()}.github.io/${p}${path&&path.endsWith('/')?'':' '}`.trim();}
+  _path(path=''){return [this.basePath,path].filter(Boolean).join('/').replace(/^\/+|\/+$/g,'');}
+  rawUrl(path){const p=this._path(path);return `https://raw.githubusercontent.com/${encodeURIComponent(this.owner)}/${encodeURIComponent(this.repo)}/${encodeURIComponent(this.branch)}/${p.split('/').map(encodeURIComponent).join('/')}`;}
+  pagesUrl(path=''){const p=[this.repo,this._path(path)].filter(Boolean).join('/').replace(/^\/+|\/+$/g,'');return `https://${this.owner.toLowerCase()}.github.io/${p}${path.endsWith('/')?'/':''}`.replace(/\/$/,'/');}
+  repositoryUrl(path=''){const p=this._path(path);return p?`https://github.com/${this.owner}/${this.repo}/blob/${encodeURIComponent(this.branch)}/${p.split('/').map(encodeURIComponent).join('/')}`:`https://github.com/${this.owner}/${this.repo}`;}
   async fetchText(path,{signal=null,cache=this.cache}={}){const r=await fetch(this.rawUrl(path),{signal,cache});if(!r.ok)throw new Error(`GitHub fetch failed (${r.status}) for ${path}`);return r.text();}
   async fetchJSON(path,opts={}){return JSON.parse(await this.fetchText(path,opts));}
   async fetchBlob(path,{signal=null,cache=this.cache}={}){const r=await fetch(this.rawUrl(path),{signal,cache});if(!r.ok)throw new Error(`GitHub fetch failed (${r.status}) for ${path}`);return r.blob();}
