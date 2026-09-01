@@ -28,6 +28,7 @@ jobs:
           mkdir -p _site/examples _site/cloud
           cp aladin-ai/site/index.html _site/index.html
           cp aladin-ai/dist/aladin-ai.js _site/aladin-ai.js
+          sha256sum aladin-ai/dist/aladin-ai.js | sed 's#aladin-ai/dist/aladin-ai.js#aladin-ai.js#' > _site/aladin-ai.js.sha256
           cp aladin-ai/examples/*.html _site/examples/
           cp aladin-ai/cloud/*.json _site/cloud/
       - uses: actions/configure-pages@v5
