@@ -1,0 +1,25 @@
+name: AladinAI Tests
+
+on:
+  push:
+    paths:
+      - 'aladin-ai/**'
+      - '.github/workflows/aladin-ai-tests.yml'
+  pull_request:
+    paths:
+      - 'aladin-ai/**'
+      - '.github/workflows/aladin-ai-tests.yml'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: aladin-ai
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run AladinAI tests
+        run: npm test
