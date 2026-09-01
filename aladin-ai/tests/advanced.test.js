@@ -49,8 +49,21 @@ const cv=crossValidate(()=>new DecisionTreeClassifier({maxDepth:3}),[[1],[2],[3]
 assert.equal(cv.length,3);
 assert.ok(cv.every(v=>v>=0&&v<=1));
 
-const payload=SerializableModel.dump(lr);
-const restored=SerializableModel.restore(payload,createDefaultRegistry());
-assert.ok(Math.abs(restored.predict([[4]])[0]-lr.predict([[4]])[0])<1e-9);
+const registry=createDefaultRegistry();
+const lrJson=SerializableModel.stringify(lr);
+const restoredLr=SerializableModel.parse(lrJson,registry);
+assert.ok(Math.abs(restoredLr.predict([[4]])[0]-lr.predict([[4]])[0])<1e-9);
+
+const labelJson=SerializableModel.stringify(le);
+const restoredLabel=SerializableModel.parse(labelJson,registry);
+assert.deepEqual(restoredLabel.transform(['plumbing','hvac']),[1,0]);
+
+const forestJson=SerializableModel.stringify(rf);
+const restoredForest=SerializableModel.parse(forestJson,registry);
+assert.deepEqual(restoredForest.predict([[1,1],[9,9]]),rf.predict([[1,1],[9,9]]));
+
+const pipelineJson=SerializableModel.stringify(pipe);
+const restoredPipeline=SerializableModel.parse(pipelineJson,registry);
+assert.deepEqual(restoredPipeline.predict([[1.5],[8.5]]),['a','b']);
 
 console.log('AladinAI advanced tests passed.');
