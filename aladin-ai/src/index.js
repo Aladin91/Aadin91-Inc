@@ -6,6 +6,7 @@ export * from './browser.js';
 export * from './retrieval.js';
 export * from './regression-trees.js';
 export * from './vision.js';
+export * from './vision-ml.js';
 export * from './github-cloud.js';
 
 import Base from './aladin-ai.js';
@@ -29,6 +30,7 @@ import {
   otsuThreshold,threshold,connectedComponents,averageHash,differenceHash,hammingDistance,perceptualSimilarity,
   templateMatch,colorKMeans,imageDescriptor,compareDescriptors
 } from './vision.js';
+import { ImageFeatureExtractor, ImageSimilarityIndex, ImageClassifier, ImageRegressor } from './vision-ml.js';
 import { GitHubCloud, GitHubReleaseAssetResolver, LocalFirstRepository, assertNoEmbeddedGitHubToken, GitHubCloudPatterns } from './github-cloud.js';
 
 export const VERSION = '0.4.0';
@@ -39,6 +41,7 @@ export function createFullRegistry(extra={}){
     NeuralNetworkClassifier,NeuralNetworkRegressor,
     CountVectorizer,FeatureHasher,BM25Index,TextSimilarityIndex,NearestNeighborsIndex,
     DecisionTreeRegressor,RandomForestRegressor,
+    ImageFeatureExtractor,ImageSimilarityIndex,ImageClassifier,ImageRegressor,
     ...extra
   });
 }
@@ -60,6 +63,7 @@ export const AladinAI = {
   validateImage,toGrayscale,imageFromCanvas,imageFromSource,resizeNearest,histogram,convolve,Kernels,sobelEdges,
   otsuThreshold,threshold,connectedComponents,averageHash,differenceHash,hammingDistance,perceptualSimilarity,
   templateMatch,colorKMeans,imageDescriptor,compareDescriptors,
+  ImageFeatureExtractor,ImageSimilarityIndex,ImageClassifier,ImageRegressor,
   GitHubCloud,GitHubReleaseAssetResolver,LocalFirstRepository,assertNoEmbeddedGitHubToken,GitHubCloudPatterns
 };
 
