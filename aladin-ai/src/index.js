@@ -7,7 +7,6 @@ export * from './retrieval.js';
 
 import Base from './aladin-ai.js';
 import {
-  ALADIN_AI_ADVANCED_VERSION,
   SeededRandom, Validation, LabelEncoder, OneHotEncoder,
   LinearRegression, LogisticRegression, RandomForestClassifier,
   KMeansPlusPlus, ZScoreAnomalyDetector, IQRAnomalyDetector,
@@ -22,6 +21,8 @@ import { NeuralNetworkClassifier, NeuralNetworkRegressor } from './neural.js';
 import { schemaFingerprint, ModelPackage, IndexedDBModelStore, processInBatches, getRuntimeCapabilities } from './browser.js';
 import { CountVectorizer, FeatureHasher, BM25Index, TextSimilarityIndex, NearestNeighborsIndex, reciprocalRankFusion } from './retrieval.js';
 
+export const VERSION = '0.3.0';
+
 export function createFullRegistry(extra={}){
   return createDefaultRegistry({
     PolynomialFeatures,PCA,SoftmaxRegression,HierarchicalClustering,RobustScaler,ExponentialMovingAverage,
@@ -33,7 +34,7 @@ export function createFullRegistry(extra={}){
 
 export const AladinAI = {
   ...Base,
-  version: ALADIN_AI_ADVANCED_VERSION,
+  version: VERSION,
   SeededRandom, Validation, LabelEncoder, OneHotEncoder,
   LinearRegression, LogisticRegression, RandomForestClassifier,
   KMeansPlusPlus, ZScoreAnomalyDetector, IQRAnomalyDetector,
