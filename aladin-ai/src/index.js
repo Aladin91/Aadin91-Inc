@@ -11,6 +11,7 @@ export * from './vision-ml.js';
 export * from './vision-adapters.js';
 export * from './github-cloud.js';
 export * from './cloud-integrity.js';
+export * from './asset-store.js';
 
 import Base from './aladin-ai.js';
 import {
@@ -38,6 +39,7 @@ import { ImageFeatureExtractor, ImageSimilarityIndex, ImageClassifier, ImageRegr
 import { LocalVisionModelAdapter,TesseractOCRAdapter,ImageEmbeddingIndex,detectLocalVisionRuntimes } from './vision-adapters.js';
 import { GitHubCloud, GitHubReleaseAssetResolver, LocalFirstRepository, assertNoEmbeddedGitHubToken, GitHubCloudPatterns } from './github-cloud.js';
 import { sha256Hex,verifySha256,fetchVerifiedAsset,VerifiedManifestLoader } from './cloud-integrity.js';
+import { MemoryAssetStore,IndexedDBAssetStore,VerifiedAssetCache } from './asset-store.js';
 
 export const VERSION = '0.4.0';
 
@@ -73,7 +75,8 @@ export const AladinAI = {
   ImageFeatureExtractor,ImageSimilarityIndex,ImageClassifier,ImageRegressor,
   LocalVisionModelAdapter,TesseractOCRAdapter,ImageEmbeddingIndex,detectLocalVisionRuntimes,
   GitHubCloud,GitHubReleaseAssetResolver,LocalFirstRepository,assertNoEmbeddedGitHubToken,GitHubCloudPatterns,
-  sha256Hex,verifySha256,fetchVerifiedAsset,VerifiedManifestLoader
+  sha256Hex,verifySha256,fetchVerifiedAsset,VerifiedManifestLoader,
+  MemoryAssetStore,IndexedDBAssetStore,VerifiedAssetCache
 };
 
 export default AladinAI;
