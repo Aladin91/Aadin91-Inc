@@ -15,19 +15,22 @@ function stripModuleSyntax(source,{core=false}={}){
   return s.trim();
 }
 
-const core=stripModuleSyntax(await readFile(resolve(root,'src/aladin-ai.js'),'utf8'),{core:true});
-const advanced=stripModuleSyntax(await readFile(resolve(root,'src/advanced.js'),'utf8'));
-const extra=stripModuleSyntax(await readFile(resolve(root,'src/extra.js'),'utf8'));
+const sourceNames=['aladin-ai.js','advanced.js','extra.js','neural.js','browser.js'];
+const parts=[];
+for(const [i,name] of sourceNames.entries())parts.push(stripModuleSyntax(await readFile(resolve(root,`src/${name}`),'utf8'),{core:i===0}));
 
 const names=[
   'SeededRandom','Validation','LabelEncoder','OneHotEncoder','LinearRegression','LogisticRegression',
   'RandomForestClassifier','KMeansPlusPlus','ZScoreAnomalyDetector','IQRAnomalyDetector','Pipeline',
   'kFoldIndices','crossValidate','DecisionEngine','SerializableModel','createDefaultRegistry',
-  'PolynomialFeatures','PCA','SoftmaxRegression','HierarchicalClustering','RobustScaler','ExponentialMovingAverage'
+  'PolynomialFeatures','PCA','SoftmaxRegression','HierarchicalClustering','RobustScaler','ExponentialMovingAverage',
+  'NeuralNetworkClassifier','NeuralNetworkRegressor','schemaFingerprint','ModelPackage','IndexedDBModelStore',
+  'processInBatches','getRuntimeCapabilities'
 ];
 
 const banner='/* AladinAI.js v0.2.0 | offline-first ML/NLP engine | generated file: do not edit directly */';
-const bundle=`${banner}\n(function(global){\n'use strict';\n${core}\n\n${advanced}\n\n${extra}\n\nfunction createFullRegistry(extra={}){return createDefaultRegistry({PolynomialFeatures,PCA,SoftmaxRegression,HierarchicalClustering,RobustScaler,ExponentialMovingAverage,...extra});}\nconst AladinAIFull={...AladinAI,version:ALADIN_AI_ADVANCED_VERSION,${names.join(',')},createFullRegistry};\nglobal.AladinAI=AladinAIFull;\n})(typeof window!=='undefined'?window:globalThis);\n`;
+const fullRegistry='function createFullRegistry(extra={}){return createDefaultRegistry({PolynomialFeatures,PCA,SoftmaxRegression,HierarchicalClustering,RobustScaler,ExponentialMovingAverage,NeuralNetworkClassifier,NeuralNetworkRegressor,...extra});}';
+const bundle=`${banner}\n(function(global){\n'use strict';\n${parts.join('\n\n')}\n\n${fullRegistry}\nconst AladinAIFull={...AladinAI,version:ALADIN_AI_ADVANCED_VERSION,${names.join(',')},createFullRegistry};\nglobal.AladinAI=AladinAIFull;\nif(typeof global.dispatchEvent==='function'&&typeof global.CustomEvent==='function')global.dispatchEvent(new global.CustomEvent('aladinai:ready',{detail:{version:AladinAIFull.version}}));\n})(typeof window!=='undefined'?window:globalThis);\n`;
 
 await writeFile(resolve(root,'dist/aladin-ai.js'),bundle,'utf8');
 console.log(`Built dist/aladin-ai.js (${Buffer.byteLength(bundle)} bytes)`);
