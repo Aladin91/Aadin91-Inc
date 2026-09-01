@@ -1,0 +1,30 @@
+{
+  "name": "AladinAI",
+  "version": "0.4.0",
+  "channel": "development",
+  "bundle": "dist/aladin-ai.js",
+  "modules": [
+    "core",
+    "advanced",
+    "extra",
+    "neural",
+    "retrieval",
+    "regression-trees",
+    "vision",
+    "github-cloud"
+  ],
+  "capabilities": {
+    "offlineML": true,
+    "offlineNLP": true,
+    "offlineRetrieval": true,
+    "offlineVision": true,
+    "indexedDB": true,
+    "githubAssetLoading": true
+  },
+  "storagePolicy": {
+    "publicVersionedAssets": "GitHub repository or release assets",
+    "privateMutableAppData": "local IndexedDB by default",
+    "browserWriteTokens": "not permitted",
+    "trustedWrites": "GitHub Actions or trusted local/server process"
+  }
+}
