@@ -1,0 +1,9 @@
+{
+  "github": {
+    "owner": "Aladin91",
+    "repo": "Aadin91-Inc",
+    "branch": "master",
+    "basePath": "aladin-ai/cloud"
+  },
+  "manifestPath": "manifest.json"
+}
