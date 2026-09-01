@@ -9,15 +9,18 @@
     ".": "./src/index.js",
     "./core": "./src/aladin-ai.js",
     "./advanced": "./src/advanced.js",
-    "./browser": "./dist/aladin-ai.js"
+    "./extra": "./src/extra.js",
+    "./browser": "./dist/aladin-ai.js",
+    "./loader": "./dist/aladin-ai-loader.js"
   },
   "scripts": {
     "build": "node scripts/build.js",
-    "test": "node tests/smoke.test.js && node tests/advanced.test.js",
+    "test": "node tests/smoke.test.js && node tests/advanced.test.js && node tests/extra.test.js",
     "test:core": "node tests/smoke.test.js",
     "test:advanced": "node tests/advanced.test.js",
+    "test:extra": "node tests/extra.test.js",
     "check": "npm run build && npm test"
   },
-  "keywords": ["machine-learning", "nlp", "offline", "javascript", "decision-tree", "random-forest", "kmeans", "naive-bayes", "anomaly-detection", "explainable-ai"],
+  "keywords": ["machine-learning", "nlp", "offline", "javascript", "decision-tree", "random-forest", "kmeans", "naive-bayes", "anomaly-detection", "pca", "softmax", "clustering", "explainable-ai"],
   "license": "MIT"
 }
