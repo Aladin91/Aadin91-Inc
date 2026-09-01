@@ -25,6 +25,7 @@
     "test:neural": "node tests/neural.test.js",
     "test:retrieval": "node tests/retrieval.test.js",
     "test:browser": "node tests/browser.test.js",
+    "benchmark": "node benchmarks/basic.js",
     "check": "npm run build && npm test"
   },
   "keywords": ["machine-learning", "nlp", "offline", "javascript", "decision-tree", "random-forest", "neural-network", "kmeans", "naive-bayes", "anomaly-detection", "pca", "softmax", "clustering", "indexeddb", "explainable-ai", "bm25", "tfidf", "retrieval", "similarity-search"],
