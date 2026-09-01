@@ -4,6 +4,7 @@ export * from './extra.js';
 export * from './neural.js';
 export * from './browser.js';
 export * from './retrieval.js';
+export * from './regression-trees.js';
 
 import Base from './aladin-ai.js';
 import {
@@ -20,6 +21,7 @@ import {
 import { NeuralNetworkClassifier, NeuralNetworkRegressor } from './neural.js';
 import { schemaFingerprint, ModelPackage, IndexedDBModelStore, processInBatches, getRuntimeCapabilities } from './browser.js';
 import { CountVectorizer, FeatureHasher, BM25Index, TextSimilarityIndex, NearestNeighborsIndex, reciprocalRankFusion } from './retrieval.js';
+import { DecisionTreeRegressor, RandomForestRegressor } from './regression-trees.js';
 
 export const VERSION = '0.3.0';
 
@@ -28,6 +30,7 @@ export function createFullRegistry(extra={}){
     PolynomialFeatures,PCA,SoftmaxRegression,HierarchicalClustering,RobustScaler,ExponentialMovingAverage,
     NeuralNetworkClassifier,NeuralNetworkRegressor,
     CountVectorizer,FeatureHasher,BM25Index,TextSimilarityIndex,NearestNeighborsIndex,
+    DecisionTreeRegressor,RandomForestRegressor,
     ...extra
   });
 }
@@ -44,7 +47,8 @@ export const AladinAI = {
   HierarchicalClustering, RobustScaler, ExponentialMovingAverage,
   NeuralNetworkClassifier, NeuralNetworkRegressor,
   schemaFingerprint, ModelPackage, IndexedDBModelStore, processInBatches, getRuntimeCapabilities,
-  CountVectorizer, FeatureHasher, BM25Index, TextSimilarityIndex, NearestNeighborsIndex, reciprocalRankFusion
+  CountVectorizer, FeatureHasher, BM25Index, TextSimilarityIndex, NearestNeighborsIndex, reciprocalRankFusion,
+  DecisionTreeRegressor, RandomForestRegressor
 };
 
 export default AladinAI;
