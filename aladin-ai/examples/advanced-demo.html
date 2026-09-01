@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>AladinAI v0.2 Advanced Demo</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;margin:0;background:#0b1020;color:#e8ecf5}
+    main{max-width:1100px;margin:auto;padding:32px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+    .card{background:#141b30;border:1px solid #29334f;border-radius:14px;padding:18px}
+    h1,h2{margin-top:0} pre{white-space:pre-wrap;word-break:break-word;background:#090d18;padding:12px;border-radius:10px;min-height:80px}
+    button{border:0;border-radius:9px;padding:10px 14px;font-weight:700;cursor:pointer}
+  </style>
+</head>
+<body>
+<main>
+  <h1>AladinAI v0.2</h1>
+  <p>Offline ES-module demo: Random Forest, regression, clustering, anomaly detection and decision consensus.</p>
+  <button id="run">Run demo</button>
+  <div class="grid" id="grid"></div>
+</main>
+<script type="module">
+  import AladinAI from '../src/index.js';
+  const grid=document.querySelector('#grid');
+  const card=(title,data)=>{const d=document.createElement('section');d.className='card';d.innerHTML=`<h2>${title}</h2><pre>${JSON.stringify(data,null,2)}</pre>`;grid.appendChild(d)};
+  document.querySelector('#run').onclick=()=>{
+    grid.innerHTML='';
+    const X=[[5,208,3],[7.5,208,5],[15,480,10],[18,480,15],[20,480,20],[22,480,25]];
+    const y=['small','small','large','large','large','large'];
+    const forest=new AladinAI.RandomForestClassifier({trees:60,maxDepth:5,seed:42}).fit(X,y);
+    card('Random Forest',{prediction:forest.predict([[19,480,18]]),probability:forest.predictProba([[19,480,18]]),importance:forest.explain(['hp','voltage','load'])});
+
+    const reg=new AladinAI.LinearRegression({learningRate:.05,epochs:2500}).fit([[0],[1],[2],[3]],[1,3,5,7]);
+    card('Linear Regression',{predictionAt4:reg.predict([[4]])[0],r2:reg.score([[0],[1],[2],[3]],[1,3,5,7])});
+
+    const km=new AladinAI.KMeansPlusPlus({clusters:2,seed:42}).fit([[1,1],[1.1,.9],[9,9],[9.2,8.8]]);
+    card('K-Means++',{labels:km.labels,centroids:km.centroids,inertia:km.inertia});
+
+    const anomaly=new AladinAI.ZScoreAnomalyDetector({threshold:2}).fit([[10],[10.2],[9.9],[10.1],[9.8]]);
+    card('Anomaly Detection',{normal:anomaly.predict([[10.05]]),outlier:anomaly.predict([[30]]),scores:anomaly.scoreSamples([[10.05],[30]])});
+
+    const tree=new AladinAI.DecisionTreeClassifier({maxDepth:4}).fit(X,y);
+    const knn=new AladinAI.KNNClassifier({k:3}).fit(X,y);
+    const engine=new AladinAI.DecisionEngine({models:[tree,forest,knn],weights:[1,2,1]});
+    card('Decision Engine',engine.analyze([19,480,18]));
+  };
+</script>
+</body>
+</html>
