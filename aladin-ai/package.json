@@ -14,6 +14,7 @@
     "./retrieval": "./src/retrieval.js",
     "./regression-trees": "./src/regression-trees.js",
     "./vision": "./src/vision.js",
+    "./vision-ml": "./src/vision-ml.js",
     "./github-cloud": "./src/github-cloud.js",
     "./browser-utils": "./src/browser.js",
     "./browser": "./dist/aladin-ai.js",
@@ -21,7 +22,7 @@
   },
   "scripts": {
     "build": "node scripts/build.js",
-    "test": "node tests/smoke.test.js && node tests/advanced.test.js && node tests/extra.test.js && node tests/neural.test.js && node tests/retrieval.test.js && node tests/regression-trees.test.js && node tests/browser.test.js && node tests/vision.test.js && node tests/github-cloud.test.js && node tests/dist.test.js",
+    "test": "node tests/smoke.test.js && node tests/advanced.test.js && node tests/extra.test.js && node tests/neural.test.js && node tests/retrieval.test.js && node tests/regression-trees.test.js && node tests/browser.test.js && node tests/vision.test.js && node tests/vision-ml.test.js && node tests/github-cloud.test.js && node tests/dist.test.js",
     "test:core": "node tests/smoke.test.js",
     "test:advanced": "node tests/advanced.test.js",
     "test:extra": "node tests/extra.test.js",
@@ -30,11 +31,12 @@
     "test:regression-trees": "node tests/regression-trees.test.js",
     "test:browser": "node tests/browser.test.js",
     "test:vision": "node tests/vision.test.js",
+    "test:vision-ml": "node tests/vision-ml.test.js",
     "test:github-cloud": "node tests/github-cloud.test.js",
     "test:dist": "node tests/dist.test.js",
     "benchmark": "node benchmarks/basic.js",
     "check": "npm run build && npm test"
   },
-  "keywords": ["machine-learning", "nlp", "offline", "javascript", "computer-vision", "image-analysis", "decision-tree", "random-forest", "neural-network", "kmeans", "naive-bayes", "anomaly-detection", "pca", "softmax", "clustering", "indexeddb", "github-pages", "explainable-ai", "bm25", "tfidf", "retrieval", "similarity-search", "regression-tree"],
+  "keywords": ["machine-learning", "nlp", "offline", "javascript", "computer-vision", "image-analysis", "image-classification", "image-similarity", "decision-tree", "random-forest", "neural-network", "kmeans", "naive-bayes", "anomaly-detection", "pca", "softmax", "clustering", "indexeddb", "github-pages", "explainable-ai", "bm25", "tfidf", "retrieval", "similarity-search", "regression-tree"],
   "license": "MIT"
 }
