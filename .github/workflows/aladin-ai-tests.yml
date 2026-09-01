@@ -27,10 +27,14 @@ jobs:
         run: npm test
       - name: Verify generated browser bundle exists
         run: test -s dist/aladin-ai.js
+      - name: Generate SHA-256 checksum
+        run: sha256sum dist/aladin-ai.js > dist/aladin-ai.js.sha256
       - name: Upload verified browser bundle
         uses: actions/upload-artifact@v4
         with:
           name: aladin-ai-v0.4-browser-bundle
-          path: aladin-ai/dist/aladin-ai.js
+          path: |
+            aladin-ai/dist/aladin-ai.js
+            aladin-ai/dist/aladin-ai.js.sha256
           if-no-files-found: error
           retention-days: 30
