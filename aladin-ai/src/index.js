@@ -6,8 +6,10 @@ export * from './browser.js';
 export * from './retrieval.js';
 export * from './regression-trees.js';
 export * from './vision.js';
+export * from './vision-extra.js';
 export * from './vision-ml.js';
 export * from './github-cloud.js';
+export * from './cloud-integrity.js';
 
 import Base from './aladin-ai.js';
 import {
@@ -30,8 +32,10 @@ import {
   otsuThreshold,threshold,connectedComponents,averageHash,differenceHash,hammingDistance,perceptualSimilarity,
   templateMatch,colorKMeans,imageDescriptor,compareDescriptors
 } from './vision.js';
+import { hogDescriptor,erode,dilate,openMorphology,closeMorphology,structuralSimilarity,edgeDensity,imageMoments } from './vision-extra.js';
 import { ImageFeatureExtractor, ImageSimilarityIndex, ImageClassifier, ImageRegressor } from './vision-ml.js';
 import { GitHubCloud, GitHubReleaseAssetResolver, LocalFirstRepository, assertNoEmbeddedGitHubToken, GitHubCloudPatterns } from './github-cloud.js';
+import { sha256Hex,verifySha256,fetchVerifiedAsset,VerifiedManifestLoader } from './cloud-integrity.js';
 
 export const VERSION = '0.4.0';
 
@@ -63,8 +67,10 @@ export const AladinAI = {
   validateImage,toGrayscale,imageFromCanvas,imageFromSource,resizeNearest,histogram,convolve,Kernels,sobelEdges,
   otsuThreshold,threshold,connectedComponents,averageHash,differenceHash,hammingDistance,perceptualSimilarity,
   templateMatch,colorKMeans,imageDescriptor,compareDescriptors,
+  hogDescriptor,erode,dilate,openMorphology,closeMorphology,structuralSimilarity,edgeDensity,imageMoments,
   ImageFeatureExtractor,ImageSimilarityIndex,ImageClassifier,ImageRegressor,
-  GitHubCloud,GitHubReleaseAssetResolver,LocalFirstRepository,assertNoEmbeddedGitHubToken,GitHubCloudPatterns
+  GitHubCloud,GitHubReleaseAssetResolver,LocalFirstRepository,assertNoEmbeddedGitHubToken,GitHubCloudPatterns,
+  sha256Hex,verifySha256,fetchVerifiedAsset,VerifiedManifestLoader
 };
 
 export default AladinAI;
