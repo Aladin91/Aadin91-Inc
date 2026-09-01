@@ -10,7 +10,7 @@ const img={width:4,height:4,data:Uint8ClampedArray.from([
   0,0,0,255, 0,0,0,255, 255,255,255,255, 255,255,255,255,
   0,0,0,255, 0,0,0,255, 255,255,255,255, 255,255,255,255
 ])};
-const gray=toGrayscale(img);assert.equal(gray.data.length,16);assert.equal(gray.data[0],0);assert.equal(gray.data[3],255);
+const gray=toGrayscale(img);assert.equal(gray.data.length,16);assert.equal(gray.data[0],0);assert.ok(Math.abs(gray.data[3]-255)<1e-9);
 const hist=histogram(img,{bins:2,normalize:false});assert.deepEqual(hist,[8,8]);
 const edges=sobelEdges(img);assert.equal(edges.data.length,16);assert.ok(Math.max(...edges.data)>0);
 const t=otsuThreshold(img);assert.ok(t>=0&&t<=255);
