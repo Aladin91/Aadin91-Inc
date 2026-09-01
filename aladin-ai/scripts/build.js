@@ -17,7 +17,7 @@ function stripModuleSyntax(source,{core=false}={}){
   return s.trim();
 }
 
-const sourceNames=['aladin-ai.js','advanced.js','extra.js','neural.js','browser.js','retrieval.js','regression-trees.js','vision.js','github-cloud.js'];
+const sourceNames=['aladin-ai.js','advanced.js','extra.js','neural.js','browser.js','retrieval.js','regression-trees.js','vision.js','vision-ml.js','github-cloud.js'];
 const parts=[];
 for(const [i,name] of sourceNames.entries())parts.push(stripModuleSyntax(await readFile(resolve(root,`src/${name}`),'utf8'),{core:i===0}));
 
@@ -31,12 +31,12 @@ const names=[
   'NearestNeighborsIndex','reciprocalRankFusion','DecisionTreeRegressor','RandomForestRegressor',
   'validateImage','toGrayscale','imageFromCanvas','imageFromSource','resizeNearest','histogram','convolve','Kernels','sobelEdges',
   'otsuThreshold','threshold','connectedComponents','averageHash','differenceHash','hammingDistance','perceptualSimilarity',
-  'templateMatch','colorKMeans','imageDescriptor','compareDescriptors',
+  'templateMatch','colorKMeans','imageDescriptor','compareDescriptors','ImageFeatureExtractor','ImageSimilarityIndex','ImageClassifier','ImageRegressor',
   'GitHubCloud','GitHubReleaseAssetResolver','LocalFirstRepository','assertNoEmbeddedGitHubToken','GitHubCloudPatterns'
 ];
 
 const banner=`/* AladinAI.js v${VERSION} | offline-first ML/NLP/retrieval/vision engine | generated file: do not edit directly */`;
-const fullRegistry='function createFullRegistry(extra={}){return createDefaultRegistry({PolynomialFeatures,PCA,SoftmaxRegression,HierarchicalClustering,RobustScaler,ExponentialMovingAverage,NeuralNetworkClassifier,NeuralNetworkRegressor,CountVectorizer,FeatureHasher,BM25Index,TextSimilarityIndex,NearestNeighborsIndex,DecisionTreeRegressor,RandomForestRegressor,...extra});}';
+const fullRegistry='function createFullRegistry(extra={}){return createDefaultRegistry({PolynomialFeatures,PCA,SoftmaxRegression,HierarchicalClustering,RobustScaler,ExponentialMovingAverage,NeuralNetworkClassifier,NeuralNetworkRegressor,CountVectorizer,FeatureHasher,BM25Index,TextSimilarityIndex,NearestNeighborsIndex,DecisionTreeRegressor,RandomForestRegressor,ImageFeatureExtractor,ImageSimilarityIndex,ImageClassifier,ImageRegressor,...extra});}';
 const bundle=`${banner}\n(function(global){\n'use strict';\n${parts.join('\n\n')}\n\n${fullRegistry}\nconst AladinAIFull={...AladinAI,version:'${VERSION}',${names.join(',')},createFullRegistry};\nglobal.AladinAI=AladinAIFull;\nif(typeof global.dispatchEvent==='function'&&typeof global.CustomEvent==='function')global.dispatchEvent(new global.CustomEvent('aladinai:ready',{detail:{version:AladinAIFull.version}}));\n})(typeof window!=='undefined'?window:globalThis);\n`;
 
 await writeFile(resolve(root,'dist/aladin-ai.js'),bundle,'utf8');
