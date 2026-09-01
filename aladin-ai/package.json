@@ -1,7 +1,7 @@
 {
   "name": "aladin-ai",
-  "version": "0.2.0",
-  "description": "Offline-first JavaScript machine learning, NLP and decision engine for reusable browser applications.",
+  "version": "0.3.0",
+  "description": "Offline-first JavaScript machine learning, NLP, retrieval and decision engine for reusable browser applications.",
   "main": "dist/aladin-ai.js",
   "module": "src/index.js",
   "type": "module",
@@ -11,19 +11,21 @@
     "./advanced": "./src/advanced.js",
     "./extra": "./src/extra.js",
     "./neural": "./src/neural.js",
+    "./retrieval": "./src/retrieval.js",
     "./browser-utils": "./src/browser.js",
     "./browser": "./dist/aladin-ai.js",
     "./loader": "./dist/aladin-ai-loader.js"
   },
   "scripts": {
     "build": "node scripts/build.js",
-    "test": "node tests/smoke.test.js && node tests/advanced.test.js && node tests/extra.test.js && node tests/neural.test.js",
+    "test": "node tests/smoke.test.js && node tests/advanced.test.js && node tests/extra.test.js && node tests/neural.test.js && node tests/retrieval.test.js",
     "test:core": "node tests/smoke.test.js",
     "test:advanced": "node tests/advanced.test.js",
     "test:extra": "node tests/extra.test.js",
     "test:neural": "node tests/neural.test.js",
+    "test:retrieval": "node tests/retrieval.test.js",
     "check": "npm run build && npm test"
   },
-  "keywords": ["machine-learning", "nlp", "offline", "javascript", "decision-tree", "random-forest", "neural-network", "kmeans", "naive-bayes", "anomaly-detection", "pca", "softmax", "clustering", "indexeddb", "explainable-ai"],
+  "keywords": ["machine-learning", "nlp", "offline", "javascript", "decision-tree", "random-forest", "neural-network", "kmeans", "naive-bayes", "anomaly-detection", "pca", "softmax", "clustering", "indexeddb", "explainable-ai", "bm25", "tfidf", "retrieval", "similarity-search"],
   "license": "MIT"
 }
