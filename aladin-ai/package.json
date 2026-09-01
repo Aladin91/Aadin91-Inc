@@ -1,12 +1,21 @@
 {
   "name": "aladin-ai",
-  "version": "0.1.0",
-  "description": "Offline-first JavaScript machine learning and NLP engine for browser applications.",
+  "version": "0.2.0",
+  "description": "Offline-first JavaScript machine learning, NLP and decision engine for reusable browser applications.",
   "main": "dist/aladin-ai.js",
+  "module": "src/index.js",
   "type": "module",
-  "scripts": {
-    "test": "node tests/smoke.test.js"
+  "exports": {
+    ".": "./src/index.js",
+    "./core": "./src/aladin-ai.js",
+    "./advanced": "./src/advanced.js",
+    "./browser": "./dist/aladin-ai.js"
   },
-  "keywords": ["machine-learning", "nlp", "offline", "javascript", "decision-tree", "kmeans", "naive-bayes"],
+  "scripts": {
+    "test": "node tests/smoke.test.js && node tests/advanced.test.js",
+    "test:core": "node tests/smoke.test.js",
+    "test:advanced": "node tests/advanced.test.js"
+  },
+  "keywords": ["machine-learning", "nlp", "offline", "javascript", "decision-tree", "random-forest", "kmeans", "naive-bayes", "anomaly-detection", "explainable-ai"],
   "license": "MIT"
 }
