@@ -12,9 +12,11 @@
     "./browser": "./dist/aladin-ai.js"
   },
   "scripts": {
+    "build": "node scripts/build.js",
     "test": "node tests/smoke.test.js && node tests/advanced.test.js",
     "test:core": "node tests/smoke.test.js",
-    "test:advanced": "node tests/advanced.test.js"
+    "test:advanced": "node tests/advanced.test.js",
+    "check": "npm run build && npm test"
   },
   "keywords": ["machine-learning", "nlp", "offline", "javascript", "decision-tree", "random-forest", "kmeans", "naive-bayes", "anomaly-detection", "explainable-ai"],
   "license": "MIT"
