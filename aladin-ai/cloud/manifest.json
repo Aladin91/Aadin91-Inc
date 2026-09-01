@@ -11,20 +11,39 @@
     "retrieval",
     "regression-trees",
     "vision",
-    "github-cloud"
+    "vision-extra",
+    "vision-ml",
+    "github-cloud",
+    "cloud-integrity"
   ],
   "capabilities": {
     "offlineML": true,
     "offlineNLP": true,
     "offlineRetrieval": true,
     "offlineVision": true,
+    "imageSimilarity": true,
+    "imageClassificationAdapters": true,
+    "imageRegressionAdapters": true,
+    "perceptualHashing": true,
+    "templateMatching": true,
+    "hogFeatures": true,
+    "ssim": true,
+    "morphology": true,
     "indexedDB": true,
-    "githubAssetLoading": true
+    "githubAssetLoading": true,
+    "sha256AssetVerification": true,
+    "githubPagesDeployment": true
   },
   "storagePolicy": {
     "publicVersionedAssets": "GitHub repository or release assets",
     "privateMutableAppData": "local IndexedDB by default",
     "browserWriteTokens": "not permitted",
     "trustedWrites": "GitHub Actions or trusted local/server process"
-  }
+  },
+  "futureOptionalRuntimes": [
+    "local OCR",
+    "ONNX Runtime Web",
+    "WebGPU vision models",
+    "WebNN vision models"
+  ]
 }
