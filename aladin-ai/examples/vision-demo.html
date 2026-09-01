@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AladinAI Vision Demo</title>
+<style>body{font-family:system-ui;max-width:1100px;margin:40px auto;padding:0 20px;background:#0d1117;color:#e6edf3}input,button{padding:10px;margin:6px 0}canvas{max-width:100%;border:1px solid #30363d;background:#fff}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}pre{white-space:pre-wrap;background:#161b22;padding:16px;border-radius:8px}@media(max-width:800px){.grid{grid-template-columns:1fr}}</style>
+</head>
+<body>
+<h1>AladinAI Vision v0.4</h1>
+<p>All analysis runs locally in your browser. The selected image is not uploaded.</p>
+<input id="file" type="file" accept="image/*">
+<div class="grid"><div><h2>Original</h2><canvas id="original"></canvas></div><div><h2>Sobel edges</h2><canvas id="edges"></canvas></div></div>
+<h2>Analysis</h2><pre id="out">Choose an image.</pre>
+<script src="../dist/aladin-ai.js"></script>
+<script>
+function drawGray(canvas,img){canvas.width=img.width;canvas.height=img.height;const ctx=canvas.getContext('2d'),d=ctx.createImageData(img.width,img.height);for(let i=0;i<img.data.length;i++){const v=Math.max(0,Math.min(255,Math.round(img.data[i]))),p=i*4;d.data[p]=d.data[p+1]=d.data[p+2]=v;d.data[p+3]=255;}ctx.putImageData(d,0,0);}
+file.addEventListener('change',async()=>{const f=file.files[0];if(!f)return;const img=await AladinAI.imageFromSource(f,{maxWidth:900,maxHeight:700});original.width=img.width;original.height=img.height;original.getContext('2d').putImageData(new ImageData(img.data,img.width,img.height),0,0);const edge=AladinAI.sobelEdges(img);drawGray(edges,edge);const d=AladinAI.imageDescriptor(img);const binary=AladinAI.threshold(img);const components=AladinAI.connectedComponents(binary,{minArea:Math.max(10,Math.floor(img.width*img.height*.001))});out.textContent=JSON.stringify({version:AladinAI.version,width:img.width,height:img.height,meanBrightness:d.stats.mean,brightnessStd:d.stats.std,edgeDensity:d.stats.edgeDensity,otsuThreshold:binary.threshold,perceptualHash:d.hash,connectedComponents:components.slice(0,20)},null,2);});
+</script>
+</body></html>
