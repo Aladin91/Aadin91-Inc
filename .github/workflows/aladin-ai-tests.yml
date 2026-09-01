@@ -30,7 +30,7 @@ jobs:
       - name: Upload verified browser bundle
         uses: actions/upload-artifact@v4
         with:
-          name: aladin-ai-v0.3-browser-bundle
+          name: aladin-ai-v0.4-browser-bundle
           path: aladin-ai/dist/aladin-ai.js
           if-no-files-found: error
           retention-days: 30
