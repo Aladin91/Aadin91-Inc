@@ -23,7 +23,14 @@ jobs:
           node-version: '22'
       - name: Build full browser bundle
         run: npm run build
-      - name: Run core, advanced and extra tests
+      - name: Run full test suite
         run: npm test
       - name: Verify generated browser bundle exists
         run: test -s dist/aladin-ai.js
+      - name: Upload verified browser bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: aladin-ai-v0.3-browser-bundle
+          path: aladin-ai/dist/aladin-ai.js
+          if-no-files-found: error
+          retention-days: 30
